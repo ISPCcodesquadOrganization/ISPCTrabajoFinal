@@ -1,40 +1,32 @@
 #conexion a la base de datos
 
-import mysql.connector as mysql
-
-conexion = mysql.connect(
-    host = 'localhost',
-    port = 3306,
-    db = 'sistema_leyes',
-    user = 'root',
-    password = '1234')
-
-cmd = conexion.cursor()
-
 #cmd.execute("Select * from leyes")
 
 
 #funcion de menu principal
+import mysql.connector
 
+db = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="1234",
+            database="sistema_leyes"
+        )
 class Leyes:
-    def __init__(self, numero_registro, numero_normativa, fecha, descripcion, normativa_id, categoria_id, jurisdiccion_id):
+    
+    def __init__(self, numero_registro=None,numero_normativa=None,fecha=None,descripcion=None,Normativas_idNormativa=None,categoria_idcategoria=None,jurisdiccion_idjurisdiccion=None):
         self.numero_registro = numero_registro
         self.numero_normativa = numero_normativa
         self.fecha = fecha
         self.descripcion = descripcion
-        self.normativa_id = normativa_id
-        self.categoria_id = categoria_id
-        self.jurisdiccion_id = jurisdiccion_id
+        self.normativa_id = Normativas_idNormativa
+        self.categoria_id = categoria_idcategoria
+        self.jurisdiccion_id = jurisdiccion_idjurisdiccion
 
     @staticmethod
     def mostrar_registros():
         # Conexión a la base de datos
-        db = mysql.connector.connect(
-            host="tu_host",
-            user="tu_usuario",
-            password="tu_contraseña",
-            database="sistema_leyes"
-        )
+      
 
         # Obtener cursor
         cursor = db.cursor()
@@ -69,7 +61,7 @@ conexion = mysql.connect(
     port = 3306,
     db = 'sistema_leyes',
     user = 'root',
-    password = 'root')
+    password = '1234')
 
 cmd = conexion.cursor()
 
@@ -95,7 +87,7 @@ def seleccion_usuario():
         #Se muestran todas las normativas
 
         print('Se muestran todas las leyes'),
-        leyes = Leyes(numero_normativa=None,fecha=None,descripcion=None,normativa_id=None,categoria_id=None,jurisdiccion_id=None)
+        leyes = Leyes(numero_registro=None,numero_normativa=None,fecha=None,descripcion=None,Normativas_idNormativa=None,categoria_idcategoria=None,jurisdiccion_idjurisdiccion=None)
         leyes.mostrar_registros(),
         print('------------------------'),
         return seleccion_usuario()
