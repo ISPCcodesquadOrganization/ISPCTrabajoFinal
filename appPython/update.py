@@ -16,18 +16,13 @@ class Ley:
             return 'Órgano legislativo no definido'
 
     def actualizar_datos(self):
+        nuevos_datos = {}
+
         nuevo_titulo = input("Ingrese el nuevo título de la ley: ")
+        nuevos_datos['titulo'] = nuevo_titulo
+
         nuevo_tipo = input("Ingrese el nuevo tipo de la ley (nacional/provincial): ")
+        nuevos_datos['tipo'] = nuevo_tipo
+        nuevos_datos['organo_legislativo'] = self.obtener_organo_legislativo(nuevo_tipo)
 
-        self.titulo = nuevo_titulo
-        self.tipo = nuevo_tipo
-        self.organo_legislativo = self.obtener_organo_legislativo()
-
-
-"""# Ejemplo de uso
-ley = Ley('Ley de Educación', 'nacional')
-print(ley.datos)  # Salida: {'titulo': 'Ley de Educación', 'tipo': 'nacional', 'organo_legislativo': 'Congreso de la Nación'}
-
-nuevos_datos = {'titulo': 'Nueva Ley de Educación', 'tipo': 'provincial'}
-ley.actualizar_datos(nuevos_datos)
-print(ley.datos)  # Salida: {'titulo': 'Nueva Ley de Educación', 'tipo': 'provincial', 'organo_legislativo': 'Legislatura de Córdoba'}"""
+        self.datos.update(nuevos_datos)
