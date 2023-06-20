@@ -1,6 +1,8 @@
 #Modificar datos en las leyes
 class Ley:
     def __init__(self, titulo, tipo):
+        self.titulo = titulo
+        self.tipo = tipo
         self.datos = {
             'titulo': titulo,
             'tipo': tipo,
@@ -26,3 +28,4 @@ class Ley:
         nuevos_datos['organo_legislativo'] = self.obtener_organo_legislativo(nuevo_tipo)
 
         self.datos.update(nuevos_datos)
+
