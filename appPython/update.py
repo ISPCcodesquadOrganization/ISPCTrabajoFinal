@@ -1,13 +1,3 @@
-#funcion de menu principal
-import mysql.connector
-
-db = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="1234",
-            database="sistema_leyes"
-        )
-
 #Modificar datos en las leyes
 class Ley:
     def __init__(self, titulo, tipo):
@@ -36,15 +26,3 @@ print(ley.datos)  # Salida: {'titulo': 'Ley de Educación', 'tipo': 'nacional', 
 nuevos_datos = {'titulo': 'Nueva Ley de Educación', 'tipo': 'provincial'}
 ley.actualizar_datos(nuevos_datos)
 print(ley.datos)  # Salida: {'titulo': 'Nueva Ley de Educación', 'tipo': 'provincial', 'organo_legislativo': 'Legislatura de Córdoba'}
-
-
-import mysql.connector as mysql
-
-conexion = mysql.connect(
-    host = 'localhost',
-    port = 3306,
-    db = 'sistema_leyes',
-    user = 'root',
-    password = '1234')
-
-cmd = conexion.cursor()
