@@ -1,27 +1,14 @@
-#funcion de menu principal
 import mysql.connector
 
 db = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="1205",
-            database="sistema_leyes"
-        )
-
-import mysql.connector as mysql
-
-conexion = mysql.connect(
-    host = 'localhost',
-    port = 3306,
-    db = 'sistema_leyes',
-    user = 'root',
-    password = '1205')
-
-cmd = conexion.cursor()
+    host="localhost",
+    user="root",
+    password="1205",
+    database="sistema_leyes"
+)
 
 class Leyes:
-    
-    def __init__(self, numero_registro=None,numero_normativa=None,fecha=None,descripcion=None,Normativas_idNormativa=None,categoria_idcategoria=None,jurisdiccion_idjurisdiccion=None):
+    def __init__(self, numero_registro=None, numero_normativa=None, fecha=None, descripcion=None, Normativas_idNormativa=None, categoria_idcategoria=None, jurisdiccion_idjurisdiccion=None):
         self.numero_registro = numero_registro
         self.numero_normativa = numero_normativa
         self.fecha = fecha
@@ -30,23 +17,28 @@ class Leyes:
         self.categoria_id = categoria_idcategoria
         self.jurisdiccion_id = jurisdiccion_idjurisdiccion
 
-    def jurisdiccion_idjurisdiccion(self, tipo):
-        if tipo == 'nacional':
-            return 'Congreso de la Nación'
-        elif tipo == 'provincial':
-            return 'Legislatura de Córdoba'
-        else:
-            return 'Órgano legislativo no definido'
+    @staticmethod
+    def editarRegistro():
+        cursor = db.cursor()
 
-    def actualizar_datos(self):
-        nuevos_datos = {}
+        # Ingreso de registro a actualizar
+        numero_registro = input('Ingrese el número de registro que desea cambiar: ')
+        nueva_normativa = input('Ingrese el nuevo número de normativa: ')
+        nueva_fecha = input('Ingrese la fecha de creación de la normativa (el formato debe ser AÑO-MES-DÍA): ')
+        descripcion = input('Ingrese una descripción de la normativa (hasta mil caracteres): ')
+        idNormativa = input('Ingrese el ID correspondiente al tipo de normativa (101 - Ley, 102 - Resolución, 103 - Decreto): ')
 
-        nueva_fecha = input("Ingrese la nueva fecha de actualización  de la ley: ")
-        nuevos_datos['fecha'] = nueva_fecha
+        sentencia = """
+            UPDATE normativas SET
+            numero_normativa = %s,
+            fecha = %s,
+            descripcion = %s,
+            Normativas_idNormativa = %s
+            WHERE numero_registro = %s
+        """
+        valores = (nueva_normativa, nueva_fecha, descripcion, idNormativa, numero_registro)
+        cursor.execute(sentencia, valores)
+        db.commit()
 
-        nueva_descripcion = input("Ingrese la nueva descripción de la ley (nacional/provincial): ")
-        nuevos_datos['descripcion'] = nueva_descripcion
-
-        self.datos.update(nuevos_datos)
 
 
