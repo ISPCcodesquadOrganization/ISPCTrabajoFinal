@@ -1,0 +1,223 @@
+CREATE DATABASE  IF NOT EXISTS `sistema_leyes` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `sistema_leyes`;
+-- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
+--
+-- Host: localhost    Database: sistema_leyes
+-- ------------------------------------------------------
+-- Server version	8.0.33
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `categorias`
+--
+
+DROP TABLE IF EXISTS `categorias`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `categorias` (
+  `idcategoria` int NOT NULL AUTO_INCREMENT,
+  `tipo_categoria` varchar(45) NOT NULL,
+  PRIMARY KEY (`idcategoria`)
+) ENGINE=InnoDB AUTO_INCREMENT=206 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `categorias`
+--
+
+LOCK TABLES `categorias` WRITE;
+/*!40000 ALTER TABLE `categorias` DISABLE KEYS */;
+INSERT INTO `categorias` VALUES (201,'Laboral'),(202,'Penal'),(203,'Civil'),(204,'Comercial'),(205,'Derecho Informático');
+/*!40000 ALTER TABLE `categorias` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `jurisdiccion`
+--
+
+DROP TABLE IF EXISTS `jurisdiccion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `jurisdiccion` (
+  `idjurisdiccion` int NOT NULL AUTO_INCREMENT,
+  `tipo_jurisdiccion` varchar(45) NOT NULL,
+  PRIMARY KEY (`idjurisdiccion`)
+) ENGINE=InnoDB AUTO_INCREMENT=304 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `jurisdiccion`
+--
+
+LOCK TABLES `jurisdiccion` WRITE;
+/*!40000 ALTER TABLE `jurisdiccion` DISABLE KEYS */;
+INSERT INTO `jurisdiccion` VALUES (301,'Nacional'),(302,'Provincial'),(303,'Municipal');
+/*!40000 ALTER TABLE `jurisdiccion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `normativas`
+--
+
+DROP TABLE IF EXISTS `normativas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `normativas` (
+  `numero_registro` int NOT NULL AUTO_INCREMENT,
+  `numero_normativa` int NOT NULL,
+  `fecha` date NOT NULL,
+  `descripcion` varchar(1000) NOT NULL,
+  `Normativas_idNormativa` int NOT NULL,
+  `categorias_idcategoria` int NOT NULL,
+  `jurisdiccion_idjurisdiccion` int NOT NULL,
+  PRIMARY KEY (`numero_registro`),
+  KEY `fk_Leyes_Normativas_idx` (`Normativas_idNormativa`),
+  KEY `fk_Leyes_categorias1_idx` (`categorias_idcategoria`),
+  KEY `fk_Leyes_jurisdiccion1_idx` (`jurisdiccion_idjurisdiccion`),
+  CONSTRAINT `fk_Leyes_categorias1` FOREIGN KEY (`categorias_idcategoria`) REFERENCES `categorias` (`idcategoria`),
+  CONSTRAINT `fk_Leyes_jurisdiccion1` FOREIGN KEY (`jurisdiccion_idjurisdiccion`) REFERENCES `jurisdiccion` (`idjurisdiccion`),
+  CONSTRAINT `fk_Leyes_Normativas` FOREIGN KEY (`Normativas_idNormativa`) REFERENCES `tipo_normativas` (`idNormativa`)
+) ENGINE=InnoDB AUTO_INCREMENT=1004 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `normativas`
+--
+
+LOCK TABLES `normativas` WRITE;
+/*!40000 ALTER TABLE `normativas` DISABLE KEYS */;
+INSERT INTO `normativas` VALUES (1001,20744,'1974-09-11','La Ley 20744 es la Ley de Contrato de Trabajo en Argentina. Establece los derechos y obligaciones tanto para empleadores como para trabajadores en relación de dependencia. Regula aspectos como la jornada laboral, las remuneraciones, las vacaciones, las licencias, la seguridad y salud laboral, entre otros. También establece los procedimientos para la contratación, la terminación del contrato y las indemnizaciones por despido. Su objetivo es proteger los derechos laborales y garantizar condiciones justas y equitativas en el ámbito laboral argentino.',101,201,301),(1002,27555,'2021-04-01','La Ley 27555 regula el teletrabajo en Argentina. Establece los derechos y obligaciones tanto para empleadores como para teletrabajadores, como la flexibilidad horaria, el derecho a la desconexión digital, la igualdad de trato y el acceso a la representación sindical. Además, fomenta la seguridad y salud laboral en el teletrabajo, estableciendo responsabilidades y medidas de protección. La ley busca regular esta modalidad de trabajo a distancia, brindando un marco legal que promueva condiciones justas y equitativas para los trabajadores y empleadores involucrados en el teletrabajo.',101,201,301),(1003,7642,'1987-12-23','La Ley de Ejercicio Profesional de la Informática en Córdoba regula la práctica de la profesión de informática en la provincia. Establece requisitos para el ejercicio, como la posesión de un título habilitante, la inscripción en el Colegio de Profesionales de Informática y el cumplimiento de normas éticas y deontológicas. Su objetivo es proteger los intereses de la sociedad y promover el buen ejercicio de la informática en Córdoba.',101,205,302);
+/*!40000 ALTER TABLE `normativas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `normativas_has_palabra_clave`
+--
+
+DROP TABLE IF EXISTS `normativas_has_palabra_clave`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `normativas_has_palabra_clave` (
+  `normativas_numero_registro` int NOT NULL,
+  `palabra_clave_idPalabra_clave` int NOT NULL,
+  PRIMARY KEY (`normativas_numero_registro`,`palabra_clave_idPalabra_clave`),
+  KEY `fk_normativas_has_palabra_clave_palabra_clave1_idx` (`palabra_clave_idPalabra_clave`),
+  KEY `fk_normativas_has_palabra_clave_normativas1_idx` (`normativas_numero_registro`),
+  CONSTRAINT `fk_normativas_has_palabra_clave_normativas1` FOREIGN KEY (`normativas_numero_registro`) REFERENCES `normativas` (`numero_registro`),
+  CONSTRAINT `fk_normativas_has_palabra_clave_palabra_clave1` FOREIGN KEY (`palabra_clave_idPalabra_clave`) REFERENCES `palabra_clave` (`idPalabra_clave`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `normativas_has_palabra_clave`
+--
+
+LOCK TABLES `normativas_has_palabra_clave` WRITE;
+/*!40000 ALTER TABLE `normativas_has_palabra_clave` DISABLE KEYS */;
+INSERT INTO `normativas_has_palabra_clave` VALUES (1001,501),(1001,502),(1001,503),(1001,504),(1001,505),(1002,506),(1002,507),(1002,508),(1002,509),(1002,510),(1003,511),(1003,512),(1003,513),(1003,514),(1003,515);
+/*!40000 ALTER TABLE `normativas_has_palabra_clave` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `organo_legislativo`
+--
+
+DROP TABLE IF EXISTS `organo_legislativo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `organo_legislativo` (
+  `idOrgano_legislativo` int NOT NULL,
+  `tipo_organo` varchar(45) NOT NULL,
+  `jurisdiccion_idjurisdiccion` int NOT NULL,
+  PRIMARY KEY (`idOrgano_legislativo`),
+  KEY `fk_Organo_legislativo_jurisdiccion1_idx` (`jurisdiccion_idjurisdiccion`),
+  CONSTRAINT `fk_Organo_legislativo_jurisdiccion1` FOREIGN KEY (`jurisdiccion_idjurisdiccion`) REFERENCES `jurisdiccion` (`idjurisdiccion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `organo_legislativo`
+--
+
+LOCK TABLES `organo_legislativo` WRITE;
+/*!40000 ALTER TABLE `organo_legislativo` DISABLE KEYS */;
+INSERT INTO `organo_legislativo` VALUES (401,'Congreso de la Nación',301),(402,'Legislatura de la provincia de Córdoba',302);
+/*!40000 ALTER TABLE `organo_legislativo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `palabra_clave`
+--
+
+DROP TABLE IF EXISTS `palabra_clave`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `palabra_clave` (
+  `idPalabra_clave` int NOT NULL AUTO_INCREMENT,
+  `Palabra` varchar(45) NOT NULL,
+  PRIMARY KEY (`idPalabra_clave`)
+) ENGINE=InnoDB AUTO_INCREMENT=516 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `palabra_clave`
+--
+
+LOCK TABLES `palabra_clave` WRITE;
+/*!40000 ALTER TABLE `palabra_clave` DISABLE KEYS */;
+INSERT INTO `palabra_clave` VALUES (501,'contrato'),(502,'trabajo'),(503,'licencia'),(504,'despido'),(505,'trabajador'),(506,'teletrabajo'),(507,'remoto'),(508,'jornada'),(509,'conexion'),(510,'desconexion'),(511,'cordoba'),(512,'profesional'),(513,'certificacion'),(514,'informatica'),(515,'etica');
+/*!40000 ALTER TABLE `palabra_clave` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tipo_normativas`
+--
+
+DROP TABLE IF EXISTS `tipo_normativas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tipo_normativas` (
+  `idNormativa` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) NOT NULL,
+  PRIMARY KEY (`idNormativa`)
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipo_normativas`
+--
+
+LOCK TABLES `tipo_normativas` WRITE;
+/*!40000 ALTER TABLE `tipo_normativas` DISABLE KEYS */;
+INSERT INTO `tipo_normativas` VALUES (101,'Ley'),(102,'Resolución'),(103,'Decreto');
+/*!40000 ALTER TABLE `tipo_normativas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping events for database 'sistema_leyes'
+--
+
+--
+-- Dumping routines for database 'sistema_leyes'
+--
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-06-18 17:04:05
